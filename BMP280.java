@@ -19,6 +19,7 @@ public class BMP280
 		// Create I2C bus
 		bus = I2CFactory.getInstance(I2CBus.BUS_1);
 		// Get I2C device, BMP280 I2C address is 0x76(108)
+		// For the BME280 from Amazon (I2C 4 ports + SPI 6 ports), the I2C address is 0x77
 		device = bus.getDevice(0x76);	
 	}
 

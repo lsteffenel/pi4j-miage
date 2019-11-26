@@ -1,7 +1,7 @@
 to compile:
 
-javac -cp /opt/pi4j/lib/'*':. BMP280.java
+javac -cp ./lib/'*':. BMP280.java
 
 to run:
 
-java -cp /opt/pi4j/lib/'*':. BMP280
+java -cp ./lib/'*':. BMP280

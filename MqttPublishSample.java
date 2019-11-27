@@ -4,20 +4,15 @@
         import org.eclipse.paho.client.mqttv3.MqttMessage;
         import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 	
-	import com.pi4j.io.i2c.I2CBus;
-	import com.pi4j.io.i2c.I2CDevice;
-	import com.pi4j.io.i2c.I2CFactory;
-	import java.io.IOException;
-
         public class MqttPublishSample {
 
         public static void main(String[] args) throws Exception {
-	   BMP280 sensor = new BMP280();
-            String topic        = "v1/devices/me/telemetry";
-            String content      = "{\"temperature\":"+sensor.getTemp(false)+"}"; // Json formatted entry
+	    float temp=25.0;
+	    String topic        = "v1/devices/me/telemetry";
+            String content      = "{\"temperature\":"+temp+"}"; // Json formatted entry
 	    int qos             = 2;
             String broker       = "tcp://tremere.local:1883";
-            String clientId     = "Pi4"; // this is the "TokenId" from your device
+            String clientId     = "Pi1"; // this is the "TokenId" from your device
             MemoryPersistence persistence = new MemoryPersistence();
 
             try {

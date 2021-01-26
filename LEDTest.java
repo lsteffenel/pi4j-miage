@@ -76,7 +76,7 @@ public class LEDTest {
         
            GpioPinDigitalOutput green = gpio.provisionDigitalOutputPin(
                 RaspiPin.GPIO_21, PinState.LOW);
-           GpioPinDigitalOutput blue = gpio.provisionDigitalOutputPin(
+           GpioPinDigitalOutput yellow = gpio.provisionDigitalOutputPin(
                 RaspiPin.GPIO_22, PinState.LOW);
            GpioPinDigitalOutput red = gpio.provisionDigitalOutputPin(
                 RaspiPin.GPIO_23, PinState.LOW);
@@ -91,18 +91,18 @@ public class LEDTest {
            pause();
            
            red.low();
-           blue.high();
+           yellow.high();
            
            pause();
            red.high();
            green.high();
            
            pause();
-           blue.low();
+           yellow.low();
            green.low();
            red.low();
             
-           gpio.unprovisionPin(blue);
+           gpio.unprovisionPin(yellow);
            gpio.unprovisionPin(red);
            gpio.unprovisionPin(green);
            gpio.shutdown();
@@ -112,27 +112,27 @@ public class LEDTest {
         }
     }
     
-    private static void mixing(boolean bred, boolean bgreen, boolean bblue) {
+    private static void mixing(boolean bred, boolean byellow, boolean bgreen) {
         final GpioController gpio = GpioFactory.getInstance();
         
            GpioPinDigitalOutput green = gpio.provisionDigitalOutputPin(
                 RaspiPin.GPIO_21, PinState.LOW);
-           GpioPinDigitalOutput blue = gpio.provisionDigitalOutputPin(
+           GpioPinDigitalOutput yellow = gpio.provisionDigitalOutputPin(
                 RaspiPin.GPIO_22, PinState.LOW);
            GpioPinDigitalOutput red = gpio.provisionDigitalOutputPin(
                 RaspiPin.GPIO_23, PinState.LOW);
            
            if(bred) red.high();
            if(bgreen) green.high();
-           if(bblue) blue.high();
+           if(byellow) yellow.high();
            
            pause();
            
            if(red.isHigh()) red.low();
            if(green.isHigh()) green.low();
-           if(blue.isHigh()) blue.low();
+           if(yellow.isHigh()) yellow.low();
            
-           gpio.unprovisionPin(blue);
+           gpio.unprovisionPin(yellow);
            gpio.unprovisionPin(red);
            gpio.unprovisionPin(green);
            gpio.shutdown();

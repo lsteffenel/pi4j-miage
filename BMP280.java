@@ -4,7 +4,11 @@
 // This code is designed to work with the BMP280_I2CS I2C Mini Module available from ControlEverything.com.
 // https://www.controleverything.com/content/Barometer?sku=BMP280_I2CSs#tabs-0-product_tabset-2
 
-
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
@@ -19,9 +23,34 @@ public class BMP280
 		// Create I2C bus
 		bus = I2CFactory.getInstance(I2CBus.BUS_1);
 		// Get I2C device, BMP280 I2C address is 0x76(108)
-		// For the BME280 from Amazon (I2C 4 ports + SPI 6 ports), the I2C address is 0x77
 		device = bus.getDevice(0x76);	
 	}
+
+public void testingLights(Double temperature) {
+         /* on essaie de alumer le led */
+        try {
+          final GpioController gpio = GpioFactory.getInstance();
+        
+           GpioPinDigitalOutput green = gpio.provisionDigitalOutputPin(
+                RaspiPin.GPIO_21, PinState.LOW);
+           GpioPinDigitalOutput blue = gpio.provisionDigitalOutputPin(
+                RaspiPin.GPIO_22, PinState.LOW);
+           GpioPinDigitalOutput red = gpio.provisionDigitalOutputPin(
+                RaspiPin.GPIO_23, PinState.LOW);
+           
+           if(temperature>25) red.high();
+           if(temperature<24) blue.high();
+           if(temperature>=24 && temperature<=25) green.high();
+           gpio.unprovisionPin(blue);
+           gpio.unprovisionPin(red);
+           gpio.unprovisionPin(green);
+           gpio.shutdown();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
 	public double getTemp(boolean Fahrenheit) throws Exception {
 		// Read 24 bytes of data from address 0x88(136)
@@ -223,5 +252,7 @@ public class BMP280
 		System.out.printf("Pressure : %.2f hPa %n", sensor.getPressure());
 		System.out.printf("Temperature in Celsius : %.2f C %n", sensor.getTemp(false));
 		System.out.printf("Temperature in Fahrenheit : %.2f F %n", sensor.getTemp(true));
+    Double temperature = sensor.getTemp(false);
+    sensor.testingLights(temperature);
 	}
 }

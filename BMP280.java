@@ -26,32 +26,6 @@ public class BMP280
 		device = bus.getDevice(0x76);	
 	}
 
-public void testingLights(Double temperature) {
-         /* on essaie de alumer le led */
-        try {
-          final GpioController gpio = GpioFactory.getInstance();
-        
-           GpioPinDigitalOutput green = gpio.provisionDigitalOutputPin(
-                RaspiPin.GPIO_21, PinState.LOW);
-           GpioPinDigitalOutput blue = gpio.provisionDigitalOutputPin(
-                RaspiPin.GPIO_22, PinState.LOW);
-           GpioPinDigitalOutput red = gpio.provisionDigitalOutputPin(
-                RaspiPin.GPIO_23, PinState.LOW);
-           
-           if(temperature>25) red.high();
-           if(temperature<24) blue.high();
-           if(temperature>=24 && temperature<=25) green.high();
-           gpio.unprovisionPin(blue);
-           gpio.unprovisionPin(red);
-           gpio.unprovisionPin(green);
-           gpio.shutdown();
-            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
 	public double getTemp(boolean Fahrenheit) throws Exception {
 		// Read 24 bytes of data from address 0x88(136)
 		byte[] b1 = new byte[24];
@@ -252,7 +226,5 @@ public void testingLights(Double temperature) {
 		System.out.printf("Pressure : %.2f hPa %n", sensor.getPressure());
 		System.out.printf("Temperature in Celsius : %.2f C %n", sensor.getTemp(false));
 		System.out.printf("Temperature in Fahrenheit : %.2f F %n", sensor.getTemp(true));
-    Double temperature = sensor.getTemp(false);
-    sensor.testingLights(temperature);
 	}
 }

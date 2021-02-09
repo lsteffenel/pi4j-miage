@@ -12,10 +12,9 @@
         public class MqttPublishSample {
 
         public static void main(String[] args) throws Exception {
-	    BMP280 sensor = new BMP280();
-            String topic        = "v1/devices/me/telemetry";
+	    String topic        = "v1/devices/me/telemetry";
 	    String static_value = "10"; // Static value. To replace by the BMP280 temperature reading
-            String content      = "{\"temperature\":"+valeur_statique+"}"; // Json formatted entry
+            String content      = "{\"temperature\":"+static_value+"}"; // Json formatted entry
 	    int qos             = 2;
             String site = "127.0.0.1"; // the dashbboard site address. Replace as described in the course
             String broker       = "tcp://"+site+":1883";
